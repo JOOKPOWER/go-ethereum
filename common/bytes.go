@@ -27,14 +27,18 @@ import (
 // FromHex returns the bytes represented by the hexadecimal string s.
 // s may be prefixed with "0x".
 func FromHex(s string) []byte {
-	if has0xPrefix(s) {
-		s = s[2:]
-	}
-	if len(s)%2 == 1 {
-		s = "0" + s
-	}
-	return Hex2Bytes(s)
+    // Check if the string has a "0x" prefix
+    if strings.HasPrefix(s, "0x") {
+        s = s[2:]
+    }
+    // Ensure that the length of the string is even by adding a leading "0" if necessary
+    if len(s)%2 != 0 {
+        s = "0" + s
+    }
+    // Convert the hexadecimal string to bytes using the Hex2Bytes function
+    return Hex2Bytes(s)
 }
+
 
 // CopyBytes returns an exact copy of the provided bytes.
 func CopyBytes(b []byte) (copiedBytes []byte) {
